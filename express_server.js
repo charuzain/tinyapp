@@ -12,10 +12,10 @@ const urlDatabase = {
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const generateRandomString = function(){
+const generateRandomString = function() {
   let randomString = Math.random().toString(36).substring(2,8);
   return randomString;
-}
+};
 
 app.get("/urls", (req, res) => {
   const templateVars = { urls: urlDatabase };
