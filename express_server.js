@@ -34,8 +34,10 @@ app.post("/urls", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
+
   const shortURL = req.params.shortURL;
   const longURL  = urlDatabase[shortURL];
+  console.log(longURL)
   res.redirect(longURL);
 
 });
@@ -48,6 +50,14 @@ app.get("/urls/:shortURL", (req, res) => {
   };
   res.render("urls_show", templateVars);
 });
+
+// Route to delete url
+app.post('/urls/:shortURL/delete', (req , res)=>{
+  console.log(req.params)
+  const shortURL = req.params.shortURL;
+  delete urlDatabase[shortURL];
+  res.redirect('/urls');
+})
 
 
 app.listen(PORT, () => {
