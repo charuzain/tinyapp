@@ -7,8 +7,20 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
+        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>  
       </div>
     </div>
+
+      <% if(username){  %>
+      <h4>Logged in As: <%= username %></h4>
+      <form method="POST" action="/logout"></form>
+      <button type="submit">Logout</button></form>
+     <% } else{  %>
+      <form method="POST" action="/login">
+      <input type="text" name="username" placeholder="Username" style="width: 400px; margin: 0.5em">
+      <button type="submit">Login</button></form>
+      <% } %>
+      
+      
   </nav>
 </header>
