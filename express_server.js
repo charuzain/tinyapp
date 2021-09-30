@@ -34,10 +34,9 @@ app.post("/urls", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
-
   const shortURL = req.params.shortURL;
   const longURL  = urlDatabase[shortURL];
-  console.log(longURL)
+  //console.log(longURL)
   res.redirect(longURL);
 
 });
@@ -53,12 +52,23 @@ app.get("/urls/:shortURL", (req, res) => {
 
 // Route to delete url
 app.post('/urls/:shortURL/delete', (req , res)=>{
-  console.log(req.params)
+ // console.log(req.params)
   const shortURL = req.params.shortURL;
   delete urlDatabase[shortURL];
   res.redirect('/urls');
 })
 
+// Route to update url
+app.post('/urls/:id' , (req,res)=>{
+  console.log(req.params.id);
+  console.log(req.body.newURL);
+  const shortURL = req.params.id;
+  const newLongURL = req.body.newURL;
+  urlDatabase[shortURL] = newLongURL;
+
+res.redirect('/urls');
+
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
