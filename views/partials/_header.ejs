@@ -11,16 +11,19 @@
       </div>
     </div>
 
-      <% if(username){  %>
-      <h4>Logged in As: <%= username %></h4>
-      <form method="POST" action="/logout"></form>
+
+
+
+
+      <% if(user){  %>
+      <form method="POST" action="/logout">
+      <h4>Logged in As: <%= user.email %></h4>
       <button type="submit">Logout</button></form>
      <% } else{  %>
-      <form method="POST" action="/login">
-      <input type="text" name="username" placeholder="Username" style="width: 400px; margin: 0.5em">
-      <button type="submit">Login</button></form>
+      <a class="btn btn-primary" href="/login">Login</a>
+      <a class="btn btn-primary" href="/register">Register</a>
       <% } %>
-      
+     
       
   </nav>
 </header>
