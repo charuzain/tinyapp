@@ -28,7 +28,7 @@
           <tr>
             <form method="POST" action="/urls/<%= url %>/delete">
             <td><%= url %></td>
-            <td><%= urls[url] %></td>
+            <td><%= urls[url].longURL %></td>
             <td><a href="/urls/<%= url %>">Edit</a></td>
             <td><button type="sumbit">Delete</button></td>
             </form>
