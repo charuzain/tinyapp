@@ -129,7 +129,7 @@ app.get("/urls/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL;
   const shortURLKey = urlDatabase[shortURL];
   if (!shortURLKey || urlDatabase[shortURL].userID !== userId) {
-    return res.status(406).send('Short URL not found. Go to /urls from <a href="/urls">here</a>');
+    return res.status(406).send('Short URL not found. Go to urls list from <a href="/urls">here</a>');
   }
   const templateVars = {
     user: loggedInUser,
