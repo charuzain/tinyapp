@@ -287,7 +287,7 @@ app.post('/register',(req,res)=>{
 
   const userFound = findUserByEmail(email , users);
   if (userFound) {
-    return res.status(400).send("User already exists!!");
+    return res.status(400).send('User already exists!! , please <a href ="/login">Login</a>');
   }
 
  
