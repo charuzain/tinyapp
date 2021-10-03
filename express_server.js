@@ -128,6 +128,11 @@ app.get("/urls/:shortURL", (req, res) => {
   const loggedInUser = users[userId];
   const shortURL = req.params.shortURL;
   const shortURLKey = urlDatabase[shortURL];
+  if(!userId)
+  {
+    return res.status(400).send('You are not logged In please <a href ="/login">Login First</a>');
+  }
+
   if (!shortURLKey || urlDatabase[shortURL].userID !== userId) {
     return res.status(406).send('Short URL not found. Go to urls list from <a href="/urls">here</a>');
   }
