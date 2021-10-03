@@ -4,11 +4,11 @@ const bcrypt = require('bcryptjs');
 const app = express();
 const PORT = 8080;
 
-const cookieSession = require('cookie-session')
+const cookieSession = require('cookie-session');
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2']
-}))
+}));
 
 
 const {
@@ -57,7 +57,7 @@ app.get('/',(req,res)=>{
 
 app.get("/urls", (req, res) => {
   //const userId = req.cookies['user_id'];
-  const userId =req.session.user_id;
+  const userId = req.session.user_id;
   const loggedInUser = users[userId];
   if (!loggedInUser) {
     return res.status(400).send('<a href ="/login">Login First</a>');
@@ -72,7 +72,7 @@ app.get("/urls", (req, res) => {
 
 app.get("/urls/new", (req, res) => {
   //const userId = req.cookies['user_id'];
-  const userId =req.session.user_id;
+  const userId = req.session.user_id;
   const loggedInUser = users[userId];
 
   const templateVars = {
@@ -87,7 +87,7 @@ app.get("/urls/new", (req, res) => {
 
 app.post("/urls", (req, res) => {
   //const userId = req.cookies['user_id'];
-  const userId =req.session.user_id;
+  const userId = req.session.user_id;
   const loggedInUser = users[userId];
   if (loggedInUser) {
     const shortuRL = generateRandomString();
@@ -118,7 +118,7 @@ app.get("/u/:shortURL", (req, res) => {
 
 app.get("/urls/:shortURL", (req, res) => {
   //const userId = req.cookies['user_id'];
-  const userId =req.session.user_id;
+  const userId = req.session.user_id;
   const loggedInUser = users[userId];
   const shortURL = req.params.shortURL;
   const shortURLKey = urlDatabase[shortURL];
@@ -136,7 +136,7 @@ app.get("/urls/:shortURL", (req, res) => {
 // Route to delete url
 app.post('/urls/:shortURL/delete', (req, res) => {
   //const userId = req.cookies['user_id'];
-  const userId =req.session.user_id;
+  const userId = req.session.user_id;
   const loggedInUser = users[userId];
   const shortURL = req.params.shortURL;
   if (!userId || userId !== urlDatabase[shortURL].userID) {
@@ -154,7 +154,7 @@ app.post('/urls/:shortURL', (req, res) => {
   const shortURL = req.params.shortURL;
   const newLongURL = req.body.newURL;
   //const userId = req.cookies['user_id'];
-  const userId =req.session.user_id;
+  const userId = req.session.user_id;
   const loggedInUser = users[userId];
   if (!userId || userId !== urlDatabase[shortURL].userID) {
     return res.status(501).send('UnAuthorized');
@@ -188,8 +188,8 @@ app.post('/login', (req, res) => {
 
   if (userFound && bcrypt.compareSync(password, userFound.password)) {
   
-   // res.cookie('user_id', userFound.id);
-   req.session.user_id = userFound.id;
+    // res.cookie('user_id', userFound.id);
+    req.session.user_id = userFound.id;
     res.redirect('/urls');
     return;
   }
