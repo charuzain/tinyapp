@@ -7,7 +7,7 @@ const PORT = 8080;
 const cookieSession = require('cookie-session');
 app.use(cookieSession({
   name: 'session',
-  keys: ['key1', 'key2']
+  keys: ['8h8@349!*rh', '9h64@*!hi#*&']
 }));
 
 
@@ -52,7 +52,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/',(req,res)=>{
 
-  res.redirect();
+  const userId = req.session.user_id;
+  const loggedInUser = users[userId];
+  if (!loggedInUser) {
+    res.redirect('/login');
+  }
+  else{
+    res.redirect('/urls');
+  }
 });
 
 app.get("/urls", (req, res) => {
@@ -60,7 +67,7 @@ app.get("/urls", (req, res) => {
   const userId = req.session.user_id;
   const loggedInUser = users[userId];
   if (!loggedInUser) {
-    return res.status(400).send('<a href ="/login">Login First</a>');
+    return res.status(400).send('You are not logged In please <a href ="/login">Login First</a>');
   }
   const loggedInUserURL = urlsForUser(userId,urlDatabase);
   const templateVars = {
