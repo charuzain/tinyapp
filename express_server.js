@@ -138,7 +138,7 @@ app.get("/urls/:shortURL", (req, res) => {
     return res.status(406).send('Short URL not found. Go to urls list from <a href="/urls">here</a>');
   }
   if ( userId !== urlDatabase[shortURL].userID) {
-    return res.status(501).send('You are not autherized to access the url. Create new url <a href="/urls/new">here</a>');
+    return res.status(501).send('You are not authorized to access the url. Create new url <a href="/urls/new">here</a>');
   }
   const templateVars = {
     user: loggedInUser,
@@ -152,8 +152,9 @@ app.get("/urls/:shortURL", (req, res) => {
 app.post('/urls/:shortURL/delete', (req, res) => {
   //const userId = req.cookies['user_id'];
   const userId = req.session.user_id;
-  const loggedInUser = users[userId];
+ //const loggedInUser = users[userId];
   const shortURL = req.params.shortURL;
+  const shortURLKey = urlDatabase[shortURL];
   if(!userId)
   {
     return res.status(400).send('You are not logged In please <a href ="/login">Login First</a>');
@@ -287,7 +288,7 @@ app.post('/register',(req,res)=>{
 
   const userFound = findUserByEmail(email , users);
   if (userFound) {
-    return res.status(400).send('User already exists!! , please <a href ="/login">Login</a>');
+    return res.status(400).send('User already exists!!Please <a href ="/login">Login</a>');
   }
 
  
