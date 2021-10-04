@@ -51,12 +51,11 @@ const users = {
 
 //------------------Home page - Redirect to /urls or /login page----------------
 app.get('/',(req,res)=>{
- const userId = req.session.user_id;
+  const userId = req.session.user_id;
   const loggedInUser = users[userId];
   if (!loggedInUser) {
     res.redirect('/login');
-  }
-  else{
+  } else {
     res.redirect('/urls');
   }
 });
@@ -120,15 +119,14 @@ app.get("/urls/:shortURL", (req, res) => {
   const loggedInUser = users[userId];
   const shortURL = req.params.shortURL;
   const shortURLKey = urlDatabase[shortURL];
-  if(!userId)
-  {
+  if (!userId) {
     return res.status(400).send('You are not logged In please <a href ="/login">Login First</a>');
   }
 
   if (!shortURLKey) {
     return res.status(406).send('Short URL not found. Go to urls list from <a href="/urls">here</a>');
   }
-  if ( userId !== urlDatabase[shortURL].userID) {
+  if (userId !== urlDatabase[shortURL].userID) {
     return res.status(501).send('You are not authorized to access the url. Create new url <a href="/urls/new">here</a>');
   }
   const templateVars = {
@@ -144,11 +142,10 @@ app.post('/urls/:shortURL/delete', (req, res) => {
   const userId = req.session.user_id;
   const shortURL = req.params.shortURL;
   const shortURLKey = urlDatabase[shortURL];
-  if(!userId)
-  {
+  if (!userId) {
     return res.status(400).send('You are not logged In please <a href ="/login">Login First</a>');
   }
-  if ( userId !== urlDatabase[shortURL].userID) {
+  if (userId !== urlDatabase[shortURL].userID) {
     return res.status(501).send('You are not autherized to access the url. Go to urls list from <a href="/urls">here</a>');
   }
   if (!shortURLKey) {
@@ -170,7 +167,7 @@ app.post('/urls/:shortURL', (req, res) => {
   if (!urlDatabase[shortURL]) {
     return res.status(502).send('URL Not Found');
   }
-  if ( userId !== urlDatabase[shortURL].userID) {
+  if (userId !== urlDatabase[shortURL].userID) {
     return res.status(501).send('You are not autherized to update the link');
   }
  
@@ -183,8 +180,7 @@ app.post('/urls/:shortURL', (req, res) => {
 app.get('/login',(req,res)=>{
   const templateVars = { user: null };
   const userId = req.session.user_id;
-  if(userId)
-  {
+  if (userId) {
     res.redirect('/urls');
   }
   res.render('login', templateVars);
@@ -194,24 +190,24 @@ app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   
- // ensure user has entered credentials
+  // ensure user has entered credentials
   if (!email || !password) {
     return res.status(403).send('Enter Details');
   }
   const userFound = findUserByEmail(email, users);
-//
+  //
   if (!userFound) {
     return res.status(401).send('User not found');
   }
 
-// if a registered email id is found and password entered is correct
+  // if a registered email id is found and password entered is correct
   if (userFound && bcrypt.compareSync(password, userFound.password)) {
     req.session.user_id = userFound.id;
     res.redirect('/urls');
     return;
   }
- // If email id is found but password entered is incorrect 
-   res.status(403).send('Wrong Password');
+  // If email id is found but password entered is incorrect
+  res.status(403).send('Wrong Password');
 });
 
 //-------------------Logout Route-----------------------------------------------
@@ -225,8 +221,7 @@ app.get('/register',(req,res)=>{
   const templateVars = { user: null};
   const userId = req.session.user_id;
 
-  if(userId)
-  {
+  if (userId) {
     res.redirect('/urls');
   }
   res.render('user_register', templateVars);
